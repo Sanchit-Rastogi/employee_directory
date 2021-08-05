@@ -51,7 +51,7 @@ class EmployeesModel extends ChangeNotifier {
 
   void onInit() async {
     var api = locator<APIService>();
-    employeeList = await api.getEmployee();
+    //employeeList = await api.getEmployee();
     notifyListeners();
   }
 }

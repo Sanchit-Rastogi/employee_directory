@@ -9,7 +9,7 @@ class PraiseModel extends ChangeNotifier {
 
   void onInit() async {
     var api = locator<APIService>();
-    praiseList = await api.getPraise();
+    //praiseList = await api.getPraise();
     print(praiseList.length);
     notifyListeners();
   }
