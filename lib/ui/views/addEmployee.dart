@@ -43,7 +43,9 @@ class _AddEmployeeViewState extends State<AddEmployeeView> {
           return Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
-              title: Text('Add Employee'),
+              title: widget.selectedEmployee.firstName != ''
+                  ? Text('Edit Employee')
+                  : Text('Add Employee'),
             ),
             body: Container(
               padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),

@@ -105,7 +105,7 @@ class _EmployeesViewState extends State<EmployeesView> {
                                   onTap: () {
                                     Navigator.pushNamed(
                                       context,
-                                      'addEmployee',
+                                      'employeeProfile',
                                       arguments: ScreenArguments(arg: emp),
                                     );
                                   },

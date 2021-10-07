@@ -1,9 +1,13 @@
 import 'package:employee_directory/core/models/employee.dart';
 import 'package:employee_directory/core/services/apiService.dart';
+import 'package:employee_directory/core/services/controller.dart';
+import 'package:employee_directory/core/services/syncronize.dart';
 import 'package:employee_directory/locator.dart';
 import 'package:flutter/material.dart';
 
 class EmployeesModel extends ChangeNotifier {
+  Controller controller = Controller();
+
   List<EmployeeModel> employeeList = [
     EmployeeModel(
       firstName: 'Akshay',
@@ -50,8 +54,16 @@ class EmployeesModel extends ChangeNotifier {
   ];
 
   void onInit() async {
-    var api = locator<APIService>();
-    //employeeList = await api.getEmployee();
+    bool res = await SyncData.isInternet();
+    if (res) {
+      print('comming from api');
+      var api = locator<APIService>();
+      employeeList = await api.getEmployee();
+    } else {
+      print('comming from db');
+      Controller controller = Controller();
+      employeeList = await controller.fetchEmployee();
+    }
     notifyListeners();
   }
 }

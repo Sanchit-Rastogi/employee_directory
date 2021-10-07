@@ -28,7 +28,7 @@ class APIService {
     print(jsonEncode(emp.toJson()));
     emp.id = 0;
     try {
-      var res = await http.post(
+      await http.post(
         Uri.parse(employeeUrl),
         body: jsonEncode(emp.toJson()),
         headers: {
@@ -36,17 +36,16 @@ class APIService {
           "accept": "application/json",
         },
       );
-      print(res.statusCode);
     } catch (e) {
       print(e);
     }
   }
 
-   Future sendPraise(Praise praise) async {
+  Future sendPraise(Praise praise) async {
     print(jsonEncode(praise.toJson()));
     praise.id = 0;
     try {
-      var res = await http.post(
+      await http.post(
         Uri.parse(praiseUrl),
         body: jsonEncode(praise.toJson()),
         headers: {
@@ -54,21 +53,18 @@ class APIService {
           "accept": "application/json",
         },
       );
-      print(res.statusCode);
     } catch (e) {
       print(e);
     }
   }
 
   Future updateEmployee(EmployeeModel emp) async {
-    print(emp.toJson());
-    var res = await http.put(
+    await http.put(
       Uri.parse(employeeUrl + '/${emp.id}'),
       body: jsonEncode(emp.toJson()),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
-    print(res.statusCode);
   }
 }

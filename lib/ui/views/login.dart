@@ -1,10 +1,13 @@
+import 'package:employee_directory/core/services/userService.dart';
 import 'package:employee_directory/ui/shared/colors.dart';
 import 'package:employee_directory/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_aad_oauth/flutter_aad_oauth.dart';
 import 'package:flutter_aad_oauth/model/config.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../locator.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -14,13 +17,13 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  static const String TENANT_ID = "865cc515-a530-4538-8ef8-072b7b2be759";
-  //  "tenant_id": "865cc515-a530-4538-8ef8-072b7b2be759"
-  static const String CLIENT_ID = "3744aafb-bd93-4651-afc5-ee9b5e66ab8a";
-  //  "client_id" : "3744aafb-bd93-4651-afc5-ee9b5e66ab8a",
+  static const String TENANT_ID = "4a6c96ed-7fe7-42e9-98b1-a14488f469a0";
+  static const String CLIENT_ID = "c62b3bb9-26f8-45e9-b173-d0100fab8e3d";
 
   late Config config;
   late FlutterAadOauth oauth = FlutterAadOauth(config);
+
+  var user = locator<UserService>();
 
   @override
   initState() {
@@ -28,7 +31,7 @@ class _LoginViewState extends State<LoginView> {
     late String scope;
     late String responseType;
 
-    scope = "openid profile offline_access";
+    scope = "openid profile offline_access Mail.Send";
     responseType = "code";
     redirectUri = "https://login.live.com/oauth20_desktop.srf";
 
@@ -61,20 +64,23 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void checkIsLogged() async {
+    EasyLoading.show(
+      status: 'Logging In...',
+      maskType: EasyLoadingMaskType.custom,
+    );
     if (await oauth.tokenIsValid()) {
       String? accessToken = await oauth.getAccessToken();
-      Fluttertoast.showToast(
-          msg: "Logged in successfully, your access token: $accessToken");
+      await user.sendMail(accessToken!);
       Navigator.pushReplacementNamed(context, '/');
     }
+    EasyLoading.dismiss();
   }
 
   void login() async {
     try {
       await oauth.login();
       String? accessToken = await oauth.getAccessToken();
-      Fluttertoast.showToast(
-          msg: "Logged in successfully, your access token: $accessToken");
+      await user.getLoggedInUser(accessToken!);
       Navigator.pushReplacementNamed(context, '/');
     } catch (e) {
       showError(e);
@@ -106,7 +112,6 @@ class _LoginViewState extends State<LoginView> {
             GestureDetector(
               onTap: () {
                 login();
-                //Navigator.pushReplacementNamed(context, '/');
               },
               child: Container(
                 width: size.width,
@@ -143,6 +148,14 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          logout();
+        },
+        child: Icon(
+          FontAwesomeIcons.signOutAlt,
         ),
       ),
     );

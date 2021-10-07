@@ -13,6 +13,14 @@ class LandingView extends StatefulWidget {
 }
 
 class _LandingViewState extends State<LandingView> {
+  var model = locator<LandingModel>();
+
+  @override
+  void initState() {
+    model.onInit();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<LandingModel>(

@@ -1,5 +1,6 @@
 import 'package:employee_directory/ui/views/addEmployee.dart';
 import 'package:employee_directory/ui/views/createPraise.dart';
+import 'package:employee_directory/ui/views/employeeProfile.dart';
 import 'package:employee_directory/ui/views/landing.dart';
 import 'package:employee_directory/ui/views/login.dart';
 import 'package:employee_directory/ui/views/previewPraise.dart';
@@ -17,6 +18,13 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => LoginView());
       case 'templates':
         return MaterialPageRoute(builder: (_) => TemplatesView());
+      case 'employeeProfile':
+        final args = settings.arguments as ScreenArguments;
+        return MaterialPageRoute(
+          builder: (_) => EmployeeProfile(
+            selectedEmployee: args.arg,
+          ),
+        );
       case 'createPraise':
         final args = settings.arguments as ScreenArguments;
         return MaterialPageRoute(
