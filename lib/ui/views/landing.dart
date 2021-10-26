@@ -58,6 +58,8 @@ class _LandingViewState extends State<LandingView> {
                           'addEmployee',
                           arguments: ScreenArguments(
                             arg: EmployeeModel(
+                              seniorId: 0,
+                              juniorsId: [],
                               firstName: '',
                               lastName: '',
                               phoneNumber: '',

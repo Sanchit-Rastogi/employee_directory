@@ -10,6 +10,8 @@ class EmployeeModel {
   String phoneNumber;
   String email;
   Gender gender;
+  int seniorId;
+  List<int> juniorsId;
 
   EmployeeModel({
     this.id,
@@ -18,12 +20,14 @@ class EmployeeModel {
     required this.phoneNumber,
     required this.email,
     required this.gender,
+    required this.seniorId,
+    required this.juniorsId,
   });
 
-  factory EmployeeModel.fromJson(Map<String, dynamic> json) => _$EmployeeModelFromJson(json);
+  factory EmployeeModel.fromJson(Map<String, dynamic> json) =>
+      _$EmployeeModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$EmployeeModelToJson(this);
-
 }
 
 enum Gender {

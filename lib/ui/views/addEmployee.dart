@@ -145,6 +145,8 @@ class _AddEmployeeViewState extends State<AddEmployeeView> {
                                   gender: _gender.text == 'Male'
                                       ? Gender.Male
                                       : Gender.Female,
+                                  seniorId: 0,
+                                  juniorsId: [],
                                 ),
                               );
                               Navigator.pushReplacementNamed(context, '/');

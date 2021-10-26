@@ -18,8 +18,7 @@ class Praise {
     required this.message,
   });
 
-  factory Praise.fromJson(Map<String, dynamic> json) =>
-      _$PraiseFromJson(json);
+  factory Praise.fromJson(Map<String, dynamic> json) => _$PraiseFromJson(json);
 
   Map<String, dynamic> toJson() => _$PraiseToJson(this);
 }

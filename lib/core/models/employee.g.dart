@@ -14,6 +14,9 @@ EmployeeModel _$EmployeeModelFromJson(Map<String, dynamic> json) {
     phoneNumber: json['phoneNumber'] as String,
     email: json['email'] as String,
     gender: _$enumDecode(_$GenderEnumMap, json['gender']),
+    seniorId: json['seniorId'] as int,
+    juniorsId:
+        (json['juniorsId'] as List<dynamic>).map((e) => e as int).toList(),
   );
 }
 
@@ -25,6 +28,8 @@ Map<String, dynamic> _$EmployeeModelToJson(EmployeeModel instance) =>
       'phoneNumber': instance.phoneNumber,
       'email': instance.email,
       'gender': _$GenderEnumMap[instance.gender],
+      'seniorId': instance.seniorId,
+      'juniorsId': instance.juniorsId,
     };
 
 K _$enumDecode<K, V>(
